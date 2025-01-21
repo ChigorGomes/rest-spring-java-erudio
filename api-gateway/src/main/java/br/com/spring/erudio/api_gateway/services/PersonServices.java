@@ -1,8 +1,10 @@
 package br.com.spring.erudio.api_gateway.services;
 
-import br.com.spring.erudio.api_gateway.dto.PersonDTO;
+import br.com.spring.erudio.api_gateway.dto.v1.PersonDTO;
+import br.com.spring.erudio.api_gateway.dto.v2.PersonDTOV2;
 import br.com.spring.erudio.api_gateway.exceptions.ResourceNotFoundException;
 import br.com.spring.erudio.api_gateway.mapper.ModelMap;
+import br.com.spring.erudio.api_gateway.mapper.custom.PersonMapper;
 import br.com.spring.erudio.api_gateway.model.Person;
 import br.com.spring.erudio.api_gateway.repository.PersonRepository;
 import org.springframework.stereotype.Service;
@@ -50,5 +52,9 @@ public class PersonServices {
     }
 
 
-
+    public PersonDTOV2 createV2(PersonDTOV2 personDTO) {
+        var entity = PersonMapper.convertDTOToEntity(personDTO);
+        var entitySave =  personRepository.save(entity);
+        return PersonMapper.convertEntityToDTO(entitySave);
+    }
 }

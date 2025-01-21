@@ -1,7 +1,7 @@
 package br.com.spring.erudio.api_gateway.controllers;
 
-import br.com.spring.erudio.api_gateway.dto.PersonDTO;
-import br.com.spring.erudio.api_gateway.model.Person;
+import br.com.spring.erudio.api_gateway.dto.v1.PersonDTO;
+import br.com.spring.erudio.api_gateway.dto.v2.PersonDTOV2;
 import br.com.spring.erudio.api_gateway.services.PersonServices;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +42,12 @@ public class PersonController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PersonDTO> createPerson(@RequestBody PersonDTO personDTO) {
         var entity = personServices.create(personDTO);
+        return ResponseEntity.ok().body(entity);
+    }
+
+    @PostMapping(value = "/v2",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonDTOV2> createPersonV2(@RequestBody PersonDTOV2 personDTO) {
+        var entity = personServices.createV2(personDTO);
         return ResponseEntity.ok().body(entity);
     }
 
