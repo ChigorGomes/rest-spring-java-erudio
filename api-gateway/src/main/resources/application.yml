@@ -6,7 +6,7 @@ spring:
       password: root
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none #   não altera a estrutura do banco
     properties:
       hibernate:
     show_sql: false

@@ -2,23 +2,24 @@ package br.com.spring.erudio.api_gateway.mapper;
 
 import org.modelmapper.ModelMapper;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ModelMap {
 
     private static ModelMapper modelMapper = new ModelMapper();
 
 
-    public static <O,D> D parseObject(O source, Class<D> D) {
-        return modelMapper.map(source, D);
+    public static <Source,Destination> Destination parseObject(Source source, Class<Destination> destination) {
+        return modelMapper.map(source, destination);
     }
 
 
-    public static <O,D> List<D> ParseListObject(List<O> source, Class<D> D) {
-        List<D> destinations = new ArrayList<>();
-        source.stream().map(o->modelMapper.map(o, D)).forEach(destinations::add);
+    public static <Source,Destination> List<Destination> ParseListObject(List<Source> source,
+                                                                         Class<Destination> destination) {
+        return source.stream()
+        .map(sourceObject->modelMapper.map(sourceObject, destination))
+                .collect(Collectors.toList());
 
-        return destinations;
     }
 }
